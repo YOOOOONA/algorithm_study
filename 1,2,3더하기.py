@@ -4,11 +4,7 @@ Created on Sat May 18 20:27:41 2019
 
 @author: 융
 """
-3
 
-4
-7
-10
 import itertools
 
 n=int(input())
