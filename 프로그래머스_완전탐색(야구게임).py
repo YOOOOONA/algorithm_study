@@ -19,49 +19,26 @@ B : 0스트라이크 1볼.
 [4,8,9]->1개만 숫자만맞고 2개는 쓰레기
 """
 
-#남의 코드 1
-def solution(baseball):
-    answer = 0
-    for i in range(123,988):
-        x=str(i)
-        if x.count(x[0])>=2 or x.count(x[1])>=2 or x.count('0')>=1:
-            continue
-        c=0
-        for j in baseball:
-            st=0
-            ba=0
-            y=str(j[0])
-            for k in range(0,3):
-                if x[k]==y[k]:
-                    st+=1
-                elif y.count(x[k])==1:
-                    ba+=1
-            if st!=j[1] or ba!=j[2]:
-                c=1
-                break
-        if c==0:
-            answer+=1
-    return answer
-
-#남의 코드 2
-def solution(bb):#bb는 2차원 배열
-    rs=list(filter(lambda x: "0" not in x and len(set(x)) ==3, list(map(str,range(111,1000)))))#0안들어가고 길이 3인 x만 모아
-    for b in bb:
+def solution(b_list):
+    tot=list(filter(lambda x: "0" not in x and len(set(x))==3, list(map(str,[i for i in range(111,1000)]))))
+    for b in b_list:
         i=0
-        while len(rs) and i<len(rs):
-            ss, st, bl = str(b[0]),0,0
+        while len(tot) and i<len(tot):
+            ss,st,bl=str(b[0]),0,0
             for j in range(len(ss)):
-                if rs[i][j] in ss:
-                    if ss.index(rs[i][j])==j:
-                        st +=1
+                if tot[i][j] in ss:
+                    if tot[i][j]==ss[j]:
+                        st+=1
                     else:
-                        bl +=1
-            if st !=b[1] or bl != b[2]:
-                rs.pop(i)
+                        bl+=1
+            if st!=b[1] or bl!=b[2]:
+                tot.pop(i)
             else:
-                i +=1                
-    return len(rs)
+                i+=1
+    return len(tot)
 
+
+# 지금까지 생각을 이상하게 하고 있었다. 해당하는 숫자를 한자리씩 유추해야 한다고 생각해서 너무 어려웠는데 그게 아니라 모든 세자리 숫자를 bb에 제공된 모든 숫자와 비교해서 strike랑 ball개수가 bb에 제공된 숫자와 같을 시 후보로 넣어서 최종 개수를 출력하면 되는 문제였다.
             
             
             
