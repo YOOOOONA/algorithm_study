@@ -56,9 +56,3 @@ def solution(b_list):
             
             
             
-            
-            
-            
-            
-            
-            )))
