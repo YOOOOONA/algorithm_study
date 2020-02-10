@@ -1,0 +1,24 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Mon Feb 10 13:15:51 2020
+
+@author: pirl
+"""
+
+def solution(bridge_length, weight, truck_weights):
+    answer = 1
+    li=[truck_weights.pop(0)]
+    while(li):
+        if truck_weights:
+            if len(li)==bridge_length:
+                li.pop(0)
+            else:
+                if sum(li)+truck_weights[0]<=weight:
+                    li.append(truck_weights.pop(0))
+                else:
+                    li.append(0)
+                answer+=1
+        else:
+            answer+=bridge_length
+            return answer
