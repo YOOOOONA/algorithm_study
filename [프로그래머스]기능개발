@@ -1,0 +1,44 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Feb 12 09:58:25 2020
+
+@author: pirl
+"""
+
+
+def solution(progresses, speeds):
+    
+    ddd=day(progresses,speeds)
+    work=[]
+    print(ddd)
+    i=0
+    while(True):
+        d=ddd[i]
+        cnt=0
+        for j in range(i,len(ddd)):
+            if d>=ddd[j]:
+                print(d,ddd[j])
+                cnt+=1
+                k=j
+            else:
+                break
+        i=k
+        work.append(cnt)
+        print("i:",i)
+        if i==len(ddd)-1:
+            break
+        else:i+=1
+
+                
+    return work
+def day(progresses,speeds):
+    day=[]
+    for (i,j) in zip(progresses,speeds):
+        n=(100-i)//j
+        if i+j*n==100:
+            day.append(n)
+        else:
+            day.append(n+1)
+    return day
+print(solution([93,30,55],[1,30,5]))
