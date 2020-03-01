@@ -16,26 +16,26 @@ dx=[0,0,1,-1]
 dy=[1,-1,0,0]
 
 def bfs(i,j):
-    q=deque()
-    q.append((i,j,0))
+    dq=deque()
+    dq.append((i,j,0))
     visited[i][j]=1
     dist=0
-    while q:
-        x,y,d=q.popleft()
+    while dq:
+        x,y,d=dq.popleft()
         for k in range(4):
             nx,ny=x+dx[k],y+dy[k]
             if nx<0 or nx>n or ny<0 or ny>m:
                 continue
             if visited[nx][ny]==0 and ocean[nx][ny]=='L':
-                q.append([nx,ny,d+1])
+                dq.append([nx,ny,d+1])
                 dist=max(dist,d+1)
                 visited[nx][ny]=1
     return dist#최장거리
 
-ans=0
+answer=0
 for i in range(n):
     for j in range(m):
         if ocean[i][j]=='L':
             visited=[[0]*m for _ in range(n)]#이게 중요함..L만 조사하되 L나올때마다 조사하는 거라..
-            ans=max(ans,bfs(i,j))
-print(ans)
+            answer=max(answer,bfs(i,j))
+print(answer)
