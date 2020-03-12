@@ -7,7 +7,6 @@ Created on Thu Mar 12 19:30:09 2020
 
 def solution(p, l):
     ans=0
-    leng=len(p)
     while(True):
         ll=len(p)
         m=max(p)
