@@ -1,0 +1,9 @@
+2
+4
+west
+east
+wait
+7
+samsung
+samsung
+samsung
