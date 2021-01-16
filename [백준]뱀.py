@@ -33,7 +33,7 @@ def solve(board,snakePath):
     path.append([0,1])#맨 처음엔 오른쪽으로 진행
     snake.append([stI,stJ])#시작 포인트
     #dr = ''#왼쪽갈지 오른쪽갈지
-    while True:
+    while (True):
         X,C = snakePath.pop(0)#시간,방향
 
         for i in range(X):
@@ -43,7 +43,7 @@ def solve(board,snakePath):
 
         #벽에 닿았는지 확인
         #자기자신에 닿았는지 확인
-        
+
 
     return endTime#게임이 끝나는 시간
 print(solve(board,snakePath))
