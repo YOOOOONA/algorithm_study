@@ -37,8 +37,9 @@ def solve(board,snakePath):
         X,C = snakePath.pop(0)#시간,방향
 
         for i in range(X):
-            for j in range(len(snake)):
-                path[j] 
+            for j in range(1-1,len(snake)-1,-1):#0번쨰는 자기 자신
+                path[j] = path[j-1]
+            
         #사과를 만나는지 여부는 대가리만 확인하고 지나면서 뱀으로 덮고 뱀지나가면 0으로 만들면 사과사라짐
 
         #벽에 닿았는지 확인
