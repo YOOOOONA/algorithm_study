@@ -5,7 +5,19 @@ input = sys.stdin.readline
 
 N = int(input())#2<=<=100 보드 크기
 K = int(input())#0<=<=100 사과 개수
-board = [[-1 if (i==0 or i==N or j==0 or j==N) else 0 for i in range(N+1)] for j in range(N+1)]
+# board = [[-1 if (i==0 or i==N or j==0 or j==N) else 0 for i in range(N+1)] for j in range(N+1)]
+board = [[0 for _ in range(N)] for _ in range(N)]
+def fin(head):
+    if (head[0]<0 or head[0]>=N) or (head[1]<0 or head[1]>=N) or  board[head[0]][head[1]] == 1:#자기 몸
+        return True
+    else:
+        return False#종료금지
+
+def apple(head):
+    if board[head[0]][head[1]] == 2:
+        return True
+    else:
+        return False
 
 for _ in range(K):#사과 위치
     i,j = map(int,input().split())
@@ -24,27 +36,41 @@ d = {'L':{(0 , 1):(-1, 0),
           (0 ,-1):(-1, 0),
           (1 , 0):(0 ,-1),
           (0 , 1):(1 , 0)}}
+
 def solve(board,snakePath):
     #뱀이 자기자신과 만나거나 벽에 부딪히면 끝남
     endTime = 0
-    path = []
     snake = []
-    stI, stJ = 1,1#1,1에서 시작
-    path.append([0,1])#맨 처음엔 오른쪽으로 진행
+    stI, stJ = 0,0#1,1에서 시작
+    path_pv = (0,1)#맨 처음엔 오른쪽으로 진행
     snake.append([stI,stJ])#시작 포인트
-    #dr = ''#왼쪽갈지 오른쪽갈지
+    board[stI][stJ] = 1
     while (True):
-        X,C = snakePath.pop(0)#시간,방향
-
-        for i in range(X):
-            for j in range(1-1,len(snake)-1,-1):#0번쨰는 자기 자신
-                path[j] = path[j-1]
+        for i in range(len(snakePath)+2):
+            if i==len(snakePath)+1:
+                X = 99999999999
+            elif i<len(snakePath):
+                X,C = snakePath[i]#시간,방향
+                path = path_pv
+            elif i==len(snakePath):
+                path = path_pv
+            for _ in range(X-endTime):#이 시간이 중요포인트였음. 첨엔 그냥 X로만 했더니, 8초동안돌고 또 10초동안돌고 그랬음
+                head = [snake[0][0]+path[0],snake[0][1]+path[1]]
+                
+                
+                if fin(head):
+                    return endTime
+                endTime += 1
+                if not apple(head):#head를 1로 만들기 전에 apple여부부터 확인해야됨
+                    tail = snake.pop()#꼬리 자르기
+                    board[tail[0]][tail[1]] = 0
+                board[head[0]][head[1]] = 1
+                head = [head,]
+                head.extend(snake)#머리늘리기   #extend는 리턴이 none임
+                snake = head
+            #X초 돌고 난 후에 방향 바꿔줘야지
+            path_pv = d[C][path]
+            print(X,C,path,endTime)
             
-        #사과를 만나는지 여부는 대가리만 확인하고 지나면서 뱀으로 덮고 뱀지나가면 0으로 만들면 사과사라짐
-
-        #벽에 닿았는지 확인
-        #자기자신에 닿았는지 확인
-
-
     return endTime#게임이 끝나는 시간
 print(solve(board,snakePath))
