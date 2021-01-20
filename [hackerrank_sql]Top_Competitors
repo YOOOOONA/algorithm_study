@@ -1,0 +1,14 @@
+assembling leaderboard인데
+최소 한게임이상 만점받은사람의 hacker_id다 모으기
+챌린지 개수로 내림차순
+챌린지 개수 같으면 해커아이디로 오름차순
+
+SELECT s.hacker_id, h.name
+FROM Submissions s
+    INNER JOIN Challenges c ON s.challenge_id = c.challenge_id
+    INNER JOIN Difficulty d ON c.difficulty_level = d.difficulty_level
+    INNER JOIN Hackers h ON s.hacker_id = h.hacker_id
+WHERE d.score = s.score
+GROUP BY s.hacker_id, h.name
+HAVING count(s.challenge_id) > 1
+ORDER BY count(s.challenge_id) DESC, s.hacker_id;
