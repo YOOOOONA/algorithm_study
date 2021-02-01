@@ -13,12 +13,12 @@ from collections import deque
 def move(bot):
     global Aq
     #컨베이어가 움직였을 때, 로봇이 오른쪽으로 움직일수있는애는 움직이기
-    botTemp = [0 for _ in range(len(bot))]
+    botTemp = deque([0 for _ in range(len(bot))])
     # for i in range(len(bot)-1,-1,-1):
     i=len(bot)-1
-    while i>0:
+    while i>1:
         if bot[i-1] == 1:#이동할 로봇이 있는 상황
-            if Aq[i] != 0:#다음칸이 0이 아니면 그 칸으로 이동
+            if Aq[i] > 0 and botTemp[i]!=1:#다음칸이 0이 아니면 그 칸으로 이동
                 botTemp[i] = 1
                 Aq[i] -= 1
             else:
@@ -29,20 +29,18 @@ def move(bot):
             
 for _ in range(4):
     N,K = map(int,input().split())
-    Alist = list(map(int,input().split()))
+    Aq = deque(map(int,input().split()))
     #deque.rotate쓰거나 그냥 que쓰거나
-
-    Aq = deque(Alist)
-    bot = deque(0 for _ in range(N))
+    bot = deque([0 for _ in range(N)])
     cnt = 0
     while(Aq.count(0) < K):
         #1
-        Aq.rotate(1)#회전하면서
-        bot = move(bot)#이동하고
-        # print('before',Aq)
-        if Aq[0]!=0:Aq[0] -= 1#위로 올리면 하나 감소
-        if Aq[N]!=0:Aq[N] -= 1#아래로 내려짐 당한 애 하나 감소
+        Aq.rotate(1)#회전하면서        
+        bot.pop();bot.appendleft(0)#얘도 같이 회전 하고
         
+        #2
+        bot = move(bot)#따로 또 이동하고
+        #3
         if Aq[0]!=0 and bot[0]==0:#올려진후에도 0이 아니고 시작점에 쌓인 로봇 없으면 새 로봇 올려야해
             bot[0] = 1
             Aq[0] -= 1#올리면 감소임
