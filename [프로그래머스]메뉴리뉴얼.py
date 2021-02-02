@@ -1,22 +1,21 @@
 from itertools import combinations
-import sys
-sys.stdin = open('.\\input.txt')
-input = sys.stdin.readline
-
-# for i in combinations("ABC",2):
-#     print(i)
 
 def solution(orders,course):
-    return ans
-
-print(solution(["ABCFG", "AC", "CDE", "ACDE", "BCFG", "ACDEH"],[2,3,4]))
-print(solution(["ABCDE", "AB", "CD", "ADE", "XYZ", "XYZ", "ACD"],[2,3,5])
-print(solution(["XYZ", "XWY", "WXA"],[2,3,4])
-print(solution(["ABD", "ABC", "ABCD"],[3])
-"""
-output:
-["AC", "ACDE", "BCFG", "CDE"]
-["ACD", "AD", "ADE", "CD", "XYZ"]
-["WX", "XY"]
-["ABC", "ABD"]
-"""
+    orders = [sorted(x) for x in orders]
+    newD = []
+    for c in course:        
+        d=dict()
+        maxcnt = 0
+        for w in orders:            
+            for x in combinations(w,c):
+                if x not in d:d[x]=1 
+                else: 
+                    d[x]+=1 
+                    maxcnt=max(maxcnt,d[x])
+        
+        # print(d)
+        for a in d:
+            if d[a]>=2 and maxcnt==d[a]:
+                newD.append(''.join(a)) 
+        
+    return sorted(newD)
