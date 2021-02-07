@@ -1,7 +1,7 @@
 #남의 답
 from collections import deque
 import sys
-
+sys.stdin = open('.\\input.txt')
 input = sys.stdin.readline
 dx = [-1, -1, 0, 1, 1, 1, 0, -1]
 dy = [0, 1, 1, 1, 0, -1, -1, -1]
@@ -23,7 +23,8 @@ for _ in range(k):
             m, s, d = a[x][y].popleft()
             nx = (s * dx[d] + x) % n
             ny = (s * dy[d] + y) % n
-            q.append([nx, ny])
+            if [nx,ny] not in q:
+                q.append([nx, ny])
             temp.append([nx, ny, m, s, d])
 
     for x, y, m, s, d in temp:
