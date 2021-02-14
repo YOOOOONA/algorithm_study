@@ -51,7 +51,7 @@ def div(ppl):#ppl 정보를
     Appl, Bppl = [], []
     S = set(range(1,N+1))
     Tppl = sum(ppl)
-    for i in range(1,N+1):
+    for i in range(1,N//2+1):
         for c in combinations(range(1,N),i):#1개부터 N-1개까지 comb구해서..
             As.append(list(S-set(c)));Appl.append(sum([ppl[j-1] for j in As[-1]]))
             Bs.append(list(c));Bppl.append(Tppl - Appl[-1])
