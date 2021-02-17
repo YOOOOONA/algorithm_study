@@ -1,36 +1,29 @@
-from copy import deepcopy
+from collections import deque
 import sys
-from heapq import heappush,heappop
 sys.stdin = open('.\\input.txt')
 input = sys.stdin.readline
-N = int(input())
-Board = [list(map(int, input().split())) for _ in range(N)]
 
-def rotate(N, B):
-    new_lst = deepcopy(B)
-    for i in range(N):
-        for j in range(N):
-            new_lst[j][N-i-1] = B[i][j]
-    return new_lst
+def bfs(x, mode):
+    q = deque()
+    q.append(x)
+    c = [-1 for _ in range(n)]
+    c[x] = 0
+    while q:
+        x = q.popleft()
+        for w, nx in a[x]:
+            if c[nx] == -1:
+                c[nx] = c[x] + w
+                q.append(nx)
+    if mode == 1:
+        return c.index(max(c))
+    else:
+        return max(c)
 
-def convert(N, B):
-    new_lst = [i for i in B if i!=0]    #0을 제외한 list저장
-    for i in range(1, len(new_lst)):
-        if new_lst[i-1] == new_lst[i]:
-            new_lst[i-1] *= 2
-            new_lst[i] = 0
-    new_lst = [i for i in new_lst if i!=0]
-    return new_lst + [0]*(N-len(new_lst))    #list길이만큼 오른쪽에 0추가
+n = int(input())
+a = [[] for _ in range(n)]
 
-def dfs(N, B, count):
-    result = max([max(i) for i in B])
-    if count == 0:
-        return result
-    
-    for _ in range(4):
-        C = [convert(N, i) for i in B]    #list한줄씩 변환한뒤 합침
-        result = max(result, dfs(N, C, count-1))
-        B = rotate(N, B)
-    return result
-
-print(dfs(N, Board, 5))
+for i in range(n-1):
+    x, y, w = map(int, input().split())
+    a[x-1].append([w, y-1])
+    a[y-1].append([w, x-1])
+print(bfs(bfs(0, 1), 2))
