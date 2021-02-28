@@ -1,22 +1,20 @@
 def solution(n, results):
     answer = 0
-    win = {}
-    lose = {}
-    for i in range(1,n+1):
-        win[i]=set()
-        lose[i]=set()
+    win = [set() for _ in range(n+1)]
+    lose = [set() for _ in range(n+1)]
     # print(win)
-    for i in range(len(results)):
-        win[results[i][0]].add(results[i][1])
-        lose[results[i][1]].add(results[i][0])
-    # print(lose)
     for i in range(1,n+1):
-        li = win[i].copy();lj = lose[i].copy()
+        for r in results:
+            if r[0] == i:
+                win[i].add(r[1])
+            if r[1] == i:
+                lose[i].add(r[0])
+        li = lose[i].copy();lj = win[i].copy()
         for j in li:
-            win[i].update(win[j])
+            win[j].update(win[i])#i가 진 사람들에게 i가 이긴 사람 목록을 추가해줘야지?
         for j in lj:
-            lose[i].update(lose[j])
-            
+            lose[j].update(lose[i])#i가 이긴사람들에게, i가 진사람들은 너넨 당연히 진다고 해줘야지
+                
     # print(win,'\n',lose)
     for i in range(1,n+1):
         if len(win[i]) + len(lose[i])==n-1:
@@ -38,3 +36,21 @@ lose[
 ]
 """
 print(solution(5,[[4, 3], [4, 2], [3, 2], [1, 2], [2, 5]]))
+"""
+[[1, 2], [2, 3], [3, 4], [5, 6], [6, 7], [7, 8]]
+win
+1:[2,3]
+2:[3]
+3:[4]
+5:[6]
+6:[7]
+7:[8]
+
+lose
+2:[1]
+3:[2]
+4:[3]
+6:[5]
+7:[6]
+8:[7]
+"""
