@@ -69,3 +69,6 @@ for t in range(8):
     answer = -1 if answer==26 else answer#answer갱신이 안됐으면 답없는거
     print('%dth answer:'%(t+1),answer)
     
+111
+111
+111
